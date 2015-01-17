@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}{{player.name}}{% endblock %}
+{% block content %}
+	<div class="panel panel-default">
+	  <div class="panel-heading">
+	    <h3 class="panel-title">{{player.name}} {{player.surname}}</h3>
+	  </div>
+	  <div class="panel-body">
+	    <br/>
+	    Aktualna drużyna: <a href="{% url 'team' team.id %}"> {{ team.name }} </a>
+	    <br/> 
+	    Trener: {{ coach.name }} {{ coach.surname }}
+	    <br/>
+	    Aktualne turnieje zawodnika:
+	    <table class="table table-hover">
+			<tr>
+				<th> Nazwa: </th>
+				<th> Data rozpoczęcia: </th>
+				<th> Data zakończenia: </th>
+			</tr>
+			<br>
+			{% for tournament in tournaments %}
+			<tr>
+			    <td>
+			         <a href="{% url 'tournament' tournament.id %}"> {{ tournament.name }} </a>
+			    </td>
+			    <td>
+			        {{ tournament.start }}
+			    </td>
+			    <td>
+			        {{ tournament.end }}
+			    </td>
+			</tr>
+			{% endfor %}
+		</table>
+	  </div>
+	</div>
+{% endblock %}
