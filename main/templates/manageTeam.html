@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}{% endblock %}
+{% block header %} Zarządzanie drużyną: {% endblock %}
+{% block content %}
+    
+<form method="post" action="">
+    {% csrf_token %}
+	<table class="table" style="width: 15%">
+        <tr>
+            <td><label>Usuń zawodnika: </label>
+            <td>{{ form.name }} {{ form.surname }} </td>
+        </tr>
+        <tr>
+            <td><input type="submit" class="btn btn-default btn-primary" value="Zatwierdź"></td>
+            <td><a href="javascript:history.back()" class="btn btn-default btn-primary">Anuluj</a></td>
+        </tr>
+    </table>
+</form>
+{% endblock %}

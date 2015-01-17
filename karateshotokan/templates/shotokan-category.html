@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% block title %} {{ category.name }} {% endblock %}
+{% block content %}{% load static %}
+    <div class="panel panel-default" xmlns="http://www.w3.org/1999/html">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{ category.tournament_id.name }} -
+                ({{ category.sex }}) {{ category.name }} {{ category.type }} {{ category.weight }}</h3>
+        </div>
+        <div class="panel-body">
+            <div class="container-fluid">
+                {% if request.user %}
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="{% url 'shotokanAddPlayersToCategory' category.id %}">Dodaj zawodników </a>
+                        </li>
+                    </ul>
+                {% endif %}
+                {% if request.user == manager.user_id.user %}
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="{% url 'shotokanUpdateCategory' category.id %}">Edytuj kategorię</a>
+                        </li>
+                    </ul>
+                {% endif %}
+            </div>
+            {% if fights %}
+                <form id='checked' method="POST" action="/get_checked/{{ category.id }}/{{ round_number }}/">
+                    <div class="container-fluid">
+                        {% for round_number, fights in history_fights.items %}
+                            <div class="row" style="float: left; width:290px">
+                                <div class="col-md-2" style="float: left">
+                                    {% for fight in fights %}
+                                        <div class="panel panel-info" style="float: left; width: 233px;">
+                                            <div class="panel-heading">Runda {{ round_number }}</div>
+                                            <div class="panel-body">
+                                                <ul>
+                                                    <li><img src="{% static "aka.png" %}" alt="AKA" />
+                                                        {{ fight.0.player_id.name }}
+                                                        {{ fight.0.player_id.surname }}
+                                                    </li>
+                                                </ul>
+                                                <center>vs.</center>
+                                                <ul>
+                                                    <li><img src="{% static "ao.png" %}" alt="AO" />
+                                                        {% if fight.1 %}
+                                                            {{ fight.1.player_id.name }}
+                                                            {{ fight.1.player_id.surname }}
+                                                        {% else %}
+                                                            BYE
+                                                        {% endif %}
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                {% for fighter1, fighter2 in fights %}
+
+                                    <div class="panel panel-info">
+                                        <div class="panel-heading">Runda {{ round_number }}</div>
+                                        <div class="panel-body">
+                                            {% if not winner and fighter1 or fighter2 %}
+                                                <ul>
+                                                    <li><img src="{% static "aka.png" %}" alt="AKA" />
+                                                        <input name="{{ fighter1.player_id.id }}" type="checkbox"
+                                                               class="checked">
+                                                        {{ fighter1.player_id.name }}
+                                                        {{ fighter1.player_id.surname }}
+
+                                                    </li>
+                                                </ul>
+                                                <center>vs.</center>
+                                                <ul>
+                                                    <li><img src="{% static "ao.png" %}" alt="AO" />
+                                                        {% if fighter2 %}
+                                                            <input name="{{ fighter2.player_id.id }}" type="checkbox"
+                                                                   class="checked">
+                                                            {{ fighter2.player_id.name }}
+                                                            {{ fighter2.player_id.surname }}
+
+                                                        {% else %}
+                                                            BYE
+                                                        {% endif %}
+                                                    </li>
+                                                </ul>
+                                            {% else %}
+                                                <ul>
+                                                    <li>
+                                                        {% if fighter1 %}
+                                                            <img src="{% static "aka.png" %}" alt="AKA" />
+                                                            {{ fighter1.player_id.name }}
+                                                            {{ fighter1.player_id.surname }}
+                                                            <p><br><strong>ZWYCIĘZCA</strong></p>
+                                                        {% elif fighter2 %}
+                                                            <img src="{% static "ao.png" %}" alt="AO" />
+                                                            {{ fighter2.player_id.name }}
+                                                            {{ fighter2.player_id.surname }}
+                                                            <p><br><strong>ZWYCIĘZCA</strong></p>
+                                                        {% endif %}
+                                                    </li>
+                                                </ul>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    {% csrf_token %}
+                    <input id="checked" type='submit' value="Następna runda" onclick="return clicked();" class="btn">
+                </form>
+                <form action="{{ request.path }}" method="post" style="margin-top: 20px;">
+                    {% csrf_token %}
+                    <input id="pdf" type='submit' value="Generuj PDF" class="btn">
+                </form>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+{% block additional_js %}
+    <script>
+        function clicked() {
+            return confirm('Czy na pewno poprawnie wybrałeś zwycięzców ?');
+        }
+    </script>
+{% endblock %}

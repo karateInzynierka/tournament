@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Organizacja turnieju: {{tournament.name}}{% endblock %}
+{% block content %}
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Organizacja turnieju:{{tournament.name}}</h3>
+  </div>
+  <div class="panel-body">
+    <br/>
+    <div class="container-fluid">
+      {% if request.session.user == manager.user_id.id%}
+	  <ul class="nav navbar-nav">
+	   		<li>
+				<a href="{% url 'createCategoryKyo' tournament.id %}">Stwórz kategorię</a>
+			</li>
+	  </ul>
+	  <ul class="nav navbar-nav">
+	   		<li>
+				<a href="{% url 'kyoRandPlayers' tournament.id %}">Losuj zawodników</a>
+			</li>
+	  </ul>
+	  {% endif %}
+	</div>
+	<div class="col-md-8">
+	    <table class="table table-hover">
+			<tr>
+				<th>Kategorie</th>
+			</tr>
+			<br>
+			{% for category in categories%}
+			<tr>
+			    <td>
+			          <a href="{% url 'kyoCategory' category.id %}"> {{ category.name }} {{ category.type }} </a>
+			          	{% if request.session.user == manager.user_id.id%}
+			          		<a href="#"> - </a>
+			          	{% endif %}
+			    </td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+  </div>
+</div>
+{% endblock %}

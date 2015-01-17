@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Karate kyokushin{% endblock %}
+{% block header %}
+Edycja kategorii
+{% endblock %}
+{% block content %}
+<form method="post" action="">
+	{% csrf_token %}
+    <table class="table" style="width: 10%">
+        <tr>
+            <td><label>Nazwa</label>
+            <td>{{ form.name }}</td>
+        </tr>
+        <tr>
+            <td><label>Typ</label>
+            <td>{{ form.type }}</td>
+        </tr>
+        <tr>
+            <td>
+            <td><input type="submit" class="btn btn-default btn-primary" value="Zatwierdź">
+                <a href="/" class="btn btn-default">Anuluj</a></td>
+        </tr>
+    </table>
+</form>
+{% endblock %}

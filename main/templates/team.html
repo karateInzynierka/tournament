@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Strona drużyny{% endblock %}
+{% block content %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{team.name}}</h3>
+    </div>
+    <div class="panel-body">
+        Trener: {{team.coach.name}} {{team.coach.surname}}
+        <br/>
+        {% if request.session.user == team.coach.user_id.id %}
+        <div class="container-fluid">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="{% url 'addPlayers' team.id %}">Dodaj zawodników</a>
+                </li>
+
+                <li>
+                    <a href="{% url 'editTeam' team.id %}">Edytuj drużynę</a>
+                </li>
+
+                <li>
+                    <a href="{% url 'manageTeam' team.id %}">Zarządzanie drużyną</a>
+                </li>
+            </ul>
+        </div>
+        {% endif %}
+        <table class="table table-hover">
+            <tr>
+                <th>Zawodnicy:</th>
+            </tr>
+            <br>
+            {% for player in players %}
+            <tr>
+                <td>
+                    <a href="{% url 'player' player.id %}"> {{ player.name }} {{ player.surname }} </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Rejestracja{% endblock %}
+{% block header %}Rejestracja  {% endblock %}
+{% block content %}
+
+    <form method="post" action="">
+        {% csrf_token %}
+        <table class="table" style="width: 10%">
+            <tr>
+                <td><label>E-mail:</label>
+                <td>{{ formset.email }}</td>
+                {% if integrity_error %}<p>{{ integrity_error }}</p>{% endif %}
+            </tr>
+            <tr>
+                <td><label>Hasło:</label>
+                <td><input type="password" name="password" id="password"></td>
+            </tr>
+            <tr>
+                <td><label>Imię:</label>
+                <td>{{ formset.name }}</td>
+            </tr>
+            <tr>
+                <td><label>Nazwisko:</label>
+                <td>{{ formset.surname }}</td>
+            </tr>
+            <tr>
+                <td><input type="submit" id="about-btn" class="btn btn-default btn-primary" value="Zatwierdź"></td>
+                <td><a href="javascript:history.back()" class="btn btn-default btn-primary">Anuluj</a></td>
+            </tr>
+        </table>
+    </form>
+{% endblock %}

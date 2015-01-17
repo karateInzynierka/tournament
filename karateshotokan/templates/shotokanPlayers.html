@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %} Zawodnicy Karate Shotokan {% endblock %}
+{% block header %} Zawodnicy: {% endblock %}
+{% block content %}
+
+<div class="container-fluid">
+    <ul class="nav navbar-nav">
+   		<li>
+			<a href="{% url 'createPlayerShotokan' tournament_id %}">Dodaj nowego</a>
+		</li>
+        <li>
+			<a href="{% url 'shotokanTournamentOrganization' tournament_id %}"><b>POWRÓT</b></a>
+		</li>
+    </ul>
+</div>
+    <table class="table table-striped" style="width: 50%">
+        <tr>
+            <th>#</th>
+            <th>Imię:</th>
+            <th>Nazwisko:</th>
+			<th>Drużyna:</th>
+        </tr>
+        <br>
+        {% for player in players %}
+
+        <tr>
+            <td>
+                {{ player.id }}.
+            </td>
+
+            <td>
+                 {{ player.name }}
+            </td>
+
+            <td>
+                 {{ player.surname }}
+            </td>
+
+            <td>
+                <a href="{% url 'team' player.team_id.id %}"> {{ player.team_id }}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

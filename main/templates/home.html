@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Strona Główna{% endblock %}
+{% block header %} Aktualnie rozgrywane turnieje: {% endblock %}
+{% block content %}
+
+<div class="container-fluid">
+    <table class="table table-hover">
+        <tr>
+            <th> Nazwa:</th>
+            <th> Data rozpoczęcia:</th>
+            <th> Data zakończenia:</th>
+            <th> Sztuka walki:</th>
+        </tr>
+        <br>
+        {% for tournament in tournaments %}
+        <tr>
+            <td>
+                <a href="{% url 'tournament' tournament.id %}"> {{ tournament.name }} </a>
+            </td>
+
+            <td>
+                {{ tournament.start }}
+            </td>
+
+            <td>
+                {{ tournament.end }}
+            </td>
+
+            <td>
+               <a href="{% url 'ShotokanTournaments' %}"> {{ tournament.type }} </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

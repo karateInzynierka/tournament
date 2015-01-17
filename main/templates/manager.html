@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Karate Kyokushin{% endblock %}
+{% block header %} Wybierz turniej {% endblock %}
+{% block content %}
+
+<div class="container-fluid">
+   <ul class="nav navbar-nav">
+   		<li>
+			<a href="{% url 'KarateKyokushinCreate' %}">Nowy turniej</a>
+		</li>
+                
+		<li>
+			<a href="#">Wybierz turniej</a>
+		</li>
+
+		<li>
+			<a href="#">Wczytaj turniej</a>
+		</li>
+
+  </ul>
+</div>
+{% endblock %}

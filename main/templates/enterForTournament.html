@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Zgłaszanie zawodników do zawodów{% endblock %}
+{% block content %}
+{% if request.user %}
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class="panel-title">Zgłaszanie zawodników z Twoich drużyn do: {{tournament.name}}</h3>
+	</div>
+	<div class="col-lg-4">
+		<ul class="nav navbar-nav">
+	   		<li>
+				<a href="{% url 'enterAllPlayersToTournament' tournament.id request.user.pk %}">Dodaj wszystkich swoich zawodników</a>
+			</li>
+	  	</ul>
+		<table class="table table-hover table-condensed">
+			<tr>
+				<th colspan="2">Zawodnicy</th>
+			</tr>
+			<br>
+			{% for player in players %}
+			<tr>
+				<td class="col-md-3">{{player.name}} {{player.surname}} {{player.team.name}}</td><td class="col-md-3" align="center"><a href="{% url 'enterPlayerTour' player.id tournament.id %}"> + </a></td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+	<div class="col-lg-4">
+		Zgłoś wszystkich zawodników z wybranej drużyny:
+		<table class="table table-hover table-condensed">
+			<tr>
+				<th colspan="2">Drużyny:</th>
+			</tr>
+			<br>
+			{% for team  in teams %}
+			<tr>
+				<td class="col-md-3">{{team.name}}</td><td class="col-md-3" align="center"><a href="{% url 'enterPlayersTeamTour' team.id tournament.id %}"> + </a></td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+</div>
+{% endif %}
+{% endblock %}
