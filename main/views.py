@@ -267,22 +267,31 @@ def playerToTeamAccept(request, player_id):
     return redirect('/user/')
 
 
-@login_required
 def updateTournament(request, tournament_id):
     template = loader.get_template('updatetournament.html')
     tournament = Tournament.objects.get(id=tournament_id)
+
     if request.method == 'POST':
-        form = CreateTournamentForm(request.POST, instance=tournament)
+        form = UpdateTournamentForm(request.POST)
+
         if form.is_valid():
-            user = User.objects.get(id=request.session['user'])
-            form.save()  # instance zawiera zapisany obiekt, takze z jego id
+            user = User.objects.get(user=request.user)
+
+            tournament = Tournament(
+                name=form.cleaned_data.get("name"),
+                start=form.cleaned_data.get("start"),
+                end=form.cleaned_data.get("end"),
+                description=form.cleaned_data.get("description")
+            )
+
+            tournament.save()
+
             return redirect('tournament', tournament_id=tournament.id)
     else:
-        form = CreateTournamentForm()
+        form = UpdateTournamentForm()
 
-    context = RequestContext(request, {
-        'form': form,
-    })
+    context = RequestContext(request, {'form': form, })
+
     return HttpResponse(template.render(context))
 
 def createTournament(request):

@@ -50,6 +50,15 @@ class CreateTournamentForm(forms.ModelForm):
             'end': forms.DateInput(format=('%d/%m/%Y'), attrs={'class': 'datepicker'})
         }
 
+class UpdateTournamentForm(ModelForm):
+    class Meta:
+        model = Tournament
+        fields = ('name', 'start', 'end', 'description',)
+        widgets = {
+            'start': forms.DateInput(format=('%d/%m/%Y'), attrs={'class': 'datepicker'}),
+            'end': forms.DateInput(format=('%d/%m/%Y'), attrs={'class': 'datepicker'})
+        }
+
 
 class SelectArtsTournamentForm(forms.ModelForm):
     class Meta:
