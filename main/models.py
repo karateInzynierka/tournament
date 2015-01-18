@@ -48,8 +48,8 @@ def file(self, filename):
 
 class Tournament(models.Model):
     name = models.CharField(max_length=50)
-    start = models.DateField()
-    end = models.DateField()
+    start = models.DateField(null=True, blank=True)
+    end = models.DateField(null=True, blank=True)
     username = models.ForeignKey(User, null=True)
 
     KYOKUSHIN = 'KYO'
