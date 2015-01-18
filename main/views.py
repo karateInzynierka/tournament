@@ -294,8 +294,8 @@ def updateTournament(request, tournament_id):
 
     return HttpResponse(template.render(context))
 
+@login_required
 def createTournament(request):
-    template = loader.get_template('createtournament.html')
 
     if request.method == 'POST':
         form = CreateTournamentForm(request.POST, request.FILES)
@@ -320,10 +320,8 @@ def createTournament(request):
     else:
         form = CreateTournamentForm()
 
-    context = RequestContext(request, {
-        'form': form,
-    })
-    return HttpResponse(template.render(context))
+    return render_to_response('createtournament.html', RequestContext(request, {'form': form, }))
+
 
 def enterForTournament(request, tournament_id, user_id):
     template = loader.get_template('enterForTournament.html')

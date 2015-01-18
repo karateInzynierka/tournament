@@ -63,7 +63,7 @@ class Tournament(models.Model):
                             default=None,
                             null=True)
     coaches = models.ManyToManyField(Coach, verbose_name="Lista trenerow", blank=True)
-    file = models.FileField(upload_to=file, verbose_name="Nazwa pliku")
+    file = models.FileField(upload_to=file, verbose_name="Nazwa pliku", blank=True)
     description = models.TextField(max_length=500)
 
     @property

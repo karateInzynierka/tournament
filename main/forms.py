@@ -41,7 +41,7 @@ class ManageTeamForm(ModelForm):
         fields = ('name', 'surname', )
 
 
-class CreateTournamentForm(forms.ModelForm):
+class CreateTournamentForm(ModelForm):
     class Meta:
         model = Tournament
         fields = ('name', 'start', 'end', 'type', 'file', 'description', )
