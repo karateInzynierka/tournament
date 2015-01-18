@@ -267,6 +267,7 @@ def playerToTeamAccept(request, player_id):
     return redirect('/user/')
 
 
+@login_required
 def updateTournament(request, tournament_id):
     template = loader.get_template('updatetournament.html')
     tournament = Tournament.objects.get(id=tournament_id)
@@ -323,6 +324,7 @@ def createTournament(request):
     return render_to_response('createtournament.html', RequestContext(request, {'form': form, }))
 
 
+@login_required
 def enterForTournament(request, tournament_id, user_id):
     template = loader.get_template('enterForTournament.html')
     players = None
@@ -345,10 +347,10 @@ def enterForTournament(request, tournament_id, user_id):
     context = RequestContext(request, {'tournament': tournament, 'players': players, 'teams': teams, })
     return HttpResponse(template.render(context))
 
-
+@login_required
 def enterAllPlayersToTournament(request, tournament_id, user_id):
     tournament = Tournament.objects.get(id=tournament_id)
-    user = User.objects.get(id=user_id)
+    user = User.objects.get(user=request.user)
     if Coach.objects.filter(user_id=user):
         coach = Coach.objects.get(user_id=user)
         for team in Team.objects.filter(coach=coach):
@@ -443,7 +445,6 @@ def player(request, player_id):
     return HttpResponse(template.render(context))
 
 
-@login_required
 def addPlayersToTournament(request, tournament_id):
     template = loader.get_template('addPlayerToTournament.html')
     tournament = Tournament.objects.get(id=tournament_id)
