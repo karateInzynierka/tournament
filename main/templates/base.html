@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Turniej - {% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link href="{{ STATIC_URL }}bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div>
@@ -43,6 +43,9 @@
     </nav>
 </div>
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.1.min.js"></script>
-{% block additional_js %}{% endblock %}
+{% block additional_js %}
+        <script src="{{ STATIC_URL }}bootstrap/js/bootstrap.js"></script>
+    <script src="{{ STATIC_URL }}bootstrap/js/jquery.min.js"></script>
+{% endblock %}
 </body>
 </html>

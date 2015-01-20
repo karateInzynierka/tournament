@@ -304,10 +304,13 @@ def createTournament(request):
         if form.is_valid():
             user = User.objects.get(user=request.user)
 
+            start = form.cleaned_data.get("start")
+            end = form.cleaned_data.get("end")
+
             tournament = Tournament(
                 name=form.cleaned_data.get("name"),
-                start=form.cleaned_data.get("start"),
-                end=form.cleaned_data.get("end"),
+                start=start,
+                end=end,
                 username=user,
                 type=form.cleaned_data.get("type"),
                 file=request.FILES.get("file"),

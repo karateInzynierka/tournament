@@ -2,7 +2,8 @@
 {% block title %}Karate System{% endblock %}
 {% block header %} Tworzenie turnieju: {% endblock %}
 {% block content %}
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+    <link href="{{ STATIC_URL }}bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+    {{ form.media }}
 <form method="post" action="{{ request.path }}" enctype="multipart/form-data">
 	{% csrf_token %}
     <table class="table" style="width: 23%">
@@ -31,18 +32,15 @@
             <td>{{ form.description }}</td>
         </tr>
         <tr>
-            <td><input type="submit" class="btn btn-default btn-primary" value="Zatwierdź"></td>
+            <td><input type="submit" id="submit" class="btn btn-default btn-primary" value="Zatwierdź"></td>
             <td><a href="javascript:history.back()" class="btn btn-default btn-primary">Anuluj</a></td>
         </tr>
     </table>
 </form>
 {% endblock %}
 {% block additional_js %}
-<script src="http://code.jquery.com/jquery-2.1.3.js"></script>
-    <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-<script>
-$(document).ready(function() {
-    $('.datepicker').datepicker();
-});
-</script>
+    <script src="{{ STATIC_URL }}bootstrap/js/bootstrap.js"></script>
+    <script src="{{ STATIC_URL }}bootstrap/js/jquery.min.js"></script>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 {% endblock %}

@@ -61,6 +61,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
+    'datetimewidget',
     'main',
     'karatekyokushin',
     'karateshotokan',
@@ -85,9 +86,8 @@ GRAPH_MODELS = {
 
 USE_I18N = True
 
-USE_L10N = False
+USE_L10N = True
 
 USE_TZ = True
-
 
 

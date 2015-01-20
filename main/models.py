@@ -6,11 +6,9 @@ from django.contrib.auth.models import User as DjangoUser
 from django.db import models
 from django.conf import settings
 
-
 class User(models.Model):
     user = models.ForeignKey(DjangoUser, blank=True, null=True)
     email = models.EmailField(unique=True)
-    # password = models.CharField(max_length=32)
     name = models.CharField(max_length=32)
     surname = models.CharField(max_length=32)
 
@@ -48,8 +46,8 @@ def file(self, filename):
 
 class Tournament(models.Model):
     name = models.CharField(max_length=50)
-    start = models.DateField(null=True, blank=True)
-    end = models.DateField(null=True, blank=True)
+    start = models.DateTimeField()
+    end = models.DateTimeField()
     username = models.ForeignKey(User, null=True)
 
     KYOKUSHIN = 'KYO'
@@ -71,7 +69,7 @@ class Tournament(models.Model):
         return os.path.relpath(self.path, settings.MEDIA_ROOT)
 
     def __unicode__(self):
-        return unicode(self.name + " " + self.start.strftime('%Y-%m-%d') + " " + self.end.strftime('%Y-%m-%d'))
+        return unicode(self.name + " " + self.start.strftime('%d.%m.%y') + " " + self.end.strftime('%d.%m.%y'))
 
 
 class PlayerTournament(models.Model):
@@ -86,7 +84,7 @@ class PlayerTournament(models.Model):
     def return_full_name(self):
         return u"%s %s" % (
             self.player_id.name.replace(u'Ł', 'L').replace(u'ł', 'l'),
-            self.player_id.surname.replace(u'Ł', 'L').replace(u'ł', 'l')
+            self.player_id.surname.replace(u'Ł', 'L').replace(u'ł', 'l').replace(u'Ś', 'S').replace(u'ś', 's')
         )
 
 

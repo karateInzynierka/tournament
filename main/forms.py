@@ -1,6 +1,7 @@
 from django import forms
 from django.forms.models import ModelForm
-
+from datetimewidget.widgets import DateWidget, DateTimeWidget
+from django.utils import dateformat
 from main.models import *
 
 
@@ -40,25 +41,34 @@ class ManageTeamForm(ModelForm):
         model = Player
         fields = ('name', 'surname', )
 
-
 class CreateTournamentForm(ModelForm):
     class Meta:
         model = Tournament
         fields = ('name', 'start', 'end', 'type', 'file', 'description', )
+
         widgets = {
-            'start': forms.DateInput(format=('%m.%d.%Y'), attrs={'class': 'datepicker'}),
-            'end': forms.DateInput(format=('%m.%d.%Y'), attrs={'class': 'datepicker'})
+            'start': DateTimeWidget(usel10n = True, bootstrap_version=3),
+            'end': DateTimeWidget(usel10n = True, bootstrap_version=3)
         }
+
+# class CreateTournamentForm(ModelForm):
+#     class Meta:
+#         model = Tournament
+#         fields = ('name', 'start', 'end', 'type', 'file', 'description', )
+#
+#         widgets={
+#             'start': forms.DateInput(format=('%d.%m.%y'), attrs={'class': 'datepicker'}),
+#             'end': forms.DateInput(format=('%d.%m.%y'), attrs={'class': 'datepicker'})
+#         }
 
 class UpdateTournamentForm(ModelForm):
     class Meta:
         model = Tournament
         fields = ('name', 'start', 'end', 'description',)
         widgets = {
-            'start': forms.DateInput(format=('%m.%d.%Y'), attrs={'class': 'datepicker'}),
-            'end': forms.DateInput(format=('%m.%d.%Y'), attrs={'class': 'datepicker'})
+            'start': forms.DateInput(format=('%d.%m.%Y'), attrs={'class': 'datepicker'}),
+            'end': forms.DateInput(format=('%d.%m.%Y'), attrs={'class': 'datepicker'})
         }
-
 
 class SelectArtsTournamentForm(forms.ModelForm):
     class Meta:
