@@ -4,7 +4,8 @@
 {% block content %}
     <link href="{{ STATIC_URL }}bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
     {{ form.media }}
-<form method="post" action="{{ request.path }}" enctype="multipart/form-data">
+
+    <form method="post" action="{{ request.path }}" enctype="multipart/form-data">
 	{% csrf_token %}
     <table class="table" style="width: 23%">
         <tr>
@@ -38,9 +39,8 @@
     </table>
 </form>
 {% endblock %}
+
 {% block additional_js %}
     <script src="{{ STATIC_URL }}bootstrap/js/bootstrap.js"></script>
-    <script src="{{ STATIC_URL }}bootstrap/js/jquery.min.js"></script>
-    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 {% endblock %}

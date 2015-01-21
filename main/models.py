@@ -69,7 +69,8 @@ class Tournament(models.Model):
         return os.path.relpath(self.path, settings.MEDIA_ROOT)
 
     def __unicode__(self):
-        return unicode(self.name + " " + self.start.strftime('%d.%m.%y') + " " + self.end.strftime('%d.%m.%y'))
+        # return unicode(self.name + " " + self.start.strftime('%d.%m.%y') + " " + self.end.strftime('%d.%m.%y'))
+        return unicode(self.name)
 
 
 class PlayerTournament(models.Model):

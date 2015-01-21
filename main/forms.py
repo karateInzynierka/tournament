@@ -41,18 +41,20 @@ class ManageTeamForm(ModelForm):
         model = Player
         fields = ('name', 'surname', )
 
+
 class CreateTournamentForm(ModelForm):
     class Meta:
         model = Tournament
         fields = ('name', 'start', 'end', 'type', 'file', 'description', )
 
         widgets = {
-            'start': DateTimeWidget(usel10n = True, bootstrap_version=3),
-            'end': DateTimeWidget(usel10n = True, bootstrap_version=3)
+            'start': DateTimeWidget(attrs={'id': "id_start"}, usel10n=True, bootstrap_version=3),
+            'end': DateTimeWidget(attrs={'id': "id_end"}, usel10n=True, bootstrap_version=3)
         }
 
+
 # class CreateTournamentForm(ModelForm):
-#     class Meta:
+# class Meta:
 #         model = Tournament
 #         fields = ('name', 'start', 'end', 'type', 'file', 'description', )
 #
@@ -65,10 +67,12 @@ class UpdateTournamentForm(ModelForm):
     class Meta:
         model = Tournament
         fields = ('name', 'start', 'end', 'description',)
+
         widgets = {
-            'start': forms.DateInput(format=('%d.%m.%Y'), attrs={'class': 'datepicker'}),
-            'end': forms.DateInput(format=('%d.%m.%Y'), attrs={'class': 'datepicker'})
+            'start': DateTimeWidget(attrs={'id': "id_start"}, usel10n=True, bootstrap_version=3),
+            'end': DateTimeWidget(attrs={'id': "id_end"}, usel10n=True, bootstrap_version=3)
         }
+
 
 class SelectArtsTournamentForm(forms.ModelForm):
     class Meta:
@@ -80,12 +84,11 @@ class SelectArtsTournamentForm(forms.ModelForm):
 class UserFormUpdateProfile(ModelForm):
     class Meta:
         model = User
-        fields = ('name', 'surname')
-        widgets = {
-            'email': forms.EmailInput(),
-            'password': forms.PasswordInput()
-        }
+        fields = ('name', 'surname', 'email')
 
+    def __init__(self, *args, **kwargs):
+        super(UserFormUpdateProfile, self).__init__(*args, **kwargs)
+        self.fields['password'] = forms.CharField(widget=forms.PasswordInput(), required=False)
 
 def clean_email(self):
     email = self.cleaned_data.get('email')
