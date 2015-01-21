@@ -38,7 +38,7 @@ DEBUG = False
 
 TEMPLATE_DEBUG = DEBUG
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['212.33.90.77']
 
 TIME_ZONE = 'Europe/Warsaw'
 
@@ -85,8 +85,12 @@ WSGI_APPLICATION = 'tournament.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'tournament',
+        'USER': 'student',
+        'PASSWORD': 'student',
+        'HOST': '',
+        'PORT': '',
     }
 }
 

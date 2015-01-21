@@ -14,4 +14,5 @@ sys.path = sys.path[::-1]
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "tournament.settings")
 
 from django.core.wsgi import get_wsgi_application
+
 application = get_wsgi_application()
