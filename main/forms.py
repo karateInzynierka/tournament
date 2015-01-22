@@ -52,6 +52,20 @@ class CreateTournamentForm(ModelForm):
             'end': DateTimeWidget(attrs={'id': "id_end"}, usel10n=True, bootstrap_version=3)
         }
 
+<<<<<<< HEAD
+=======
+
+# class CreateTournamentForm(ModelForm):
+# class Meta:
+#         model = Tournament
+#         fields = ('name', 'start', 'end', 'type', 'file', 'description', )
+#
+#         widgets={
+#             'start': forms.DateInput(format=('%d.%m.%y'), attrs={'class': 'datepicker'}),
+#             'end': forms.DateInput(format=('%d.%m.%y'), attrs={'class': 'datepicker'})
+#         }
+
+>>>>>>> FETCH_HEAD
 class UpdateTournamentForm(ModelForm):
     class Meta:
         model = Tournament

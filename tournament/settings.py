@@ -9,13 +9,24 @@ MEDIA_ROOT = join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
 
-STATIC_PATH = os.path.join(PROJECT_PATH,'static')
-
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-STATICFILES_DIRS = (
-    STATIC_PATH,
+STATIC_TEMPLATES = os.path.join(BASE_DIR, 'static')
+
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, 'static'),
+# )
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'django.contrib.staticfiles.finders.FileSystemFinder',
 )
+
+# STATICFILES_DIRS = (
+#     STATIC_PATH,
+# )
+
 MAX_UPLOAD_SIZE = 20971520  # 20MB
 
 CONTENT_TYPES = ['application/pdf', 'image/jpeg', 'image/png']  # .pdf, .jpeg and .png
@@ -23,11 +34,11 @@ CONTENT_TYPES = ['application/pdf', 'image/jpeg', 'image/png']  # .pdf, .jpeg an
 SECRET_KEY = '$2570k@5cvn*q3tju((%i!@aunnw8_lcknx&n=vr3kc4#ndnmt'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = DEBUG
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['212.33.90.77']
 
 TIME_ZONE = 'Europe/Warsaw'
 
@@ -74,8 +85,12 @@ WSGI_APPLICATION = 'tournament.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'tournament',
+        'USER': 'student',
+        'PASSWORD': 'student',
+        'HOST': '',
+        'PORT': '',
     }
 }
 

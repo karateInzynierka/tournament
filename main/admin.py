@@ -17,4 +17,8 @@ admin.site.register(Coach)
 admin.site.register(Player)
 admin.site.register(PlayerTournament)
 admin.site.register(Manager, ManagerAdmin)
+<<<<<<< HEAD
 admin.site.register(Tournament, TournamentAdmin)
+=======
+admin.site.register(Tournament, TournamentAdmin)
+>>>>>>> FETCH_HEAD
