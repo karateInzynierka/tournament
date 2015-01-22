@@ -20,6 +20,10 @@ from models import Tournament
 def home(request):
     tournaments = Tournament.objects.all()
 
+    for tournament in tournaments:
+        print tournament.start
+        print tournament.end
+
     return render(request, 'home.html', {
         'tournaments': tournaments,
     })
@@ -170,16 +174,44 @@ def updateProfile(request):
 
     if request.method == 'POST':
         form = UserFormUpdateProfile(request.POST, instance=user)
+
+        print form.fields
+
         if form.is_valid():
+            user.user.username = form.cleaned_data.get("name")
+            user.user.first_name = form.cleaned_data.get("name")
+            user.user.last_name = form.cleaned_data.get("surname")
+
+            email = form.cleaned_data.get("email")
+
+            print 'email', email
+            if email:
+                user.user.email = form.cleaned_data.get("email")
+
+
+            password = form.cleaned_data.get("password")
+            print 'password', password
+            if password:
+                user.user.set_password(password)
+
+            user.user.save()
+
             up = form.save(commit=False)
             up.user = request.user
             up.save()
+
             success = True
+
+            if password:
+                logout(request)
+
+                return redirect('signIn')
+
+            return redirect('updateProfile')
     else:
         form = UserFormUpdateProfile(instance=user)
 
-    return render_to_response('updateProfile.html',
-        locals(), context_instance=RequestContext(request))
+    return render_to_response('updateProfile.html', locals(), context_instance=RequestContext(request))
 
 
 @login_required
@@ -269,31 +301,24 @@ def playerToTeamAccept(request, player_id):
 
 @login_required
 def updateTournament(request, tournament_id):
-    template = loader.get_template('updatetournament.html')
     tournament = Tournament.objects.get(id=tournament_id)
 
     if request.method == 'POST':
         form = UpdateTournamentForm(request.POST)
 
         if form.is_valid():
-            user = User.objects.get(user=request.user)
-
-            tournament = Tournament(
-                name=form.cleaned_data.get("name"),
-                start=form.cleaned_data.get("start"),
-                end=form.cleaned_data.get("end"),
-                description=form.cleaned_data.get("description")
-            )
+            tournament.name = form.cleaned_data.get("name")
+            tournament.start = form.cleaned_data.get("start")
+            tournament.end = form.cleaned_data.get("end")
+            tournament.description = form.cleaned_data.get("description")
 
             tournament.save()
 
             return redirect('tournament', tournament_id=tournament.id)
     else:
-        form = UpdateTournamentForm()
+        form = UpdateTournamentForm(instance=tournament)
 
-    context = RequestContext(request, {'form': form, })
-
-    return HttpResponse(template.render(context))
+    return render_to_response('updatetournament.html', RequestContext(request, {'form': form, }))
 
 @login_required
 def createTournament(request):
@@ -304,13 +329,10 @@ def createTournament(request):
         if form.is_valid():
             user = User.objects.get(user=request.user)
 
-            start = form.cleaned_data.get("start")
-            end = form.cleaned_data.get("end")
-
             tournament = Tournament(
                 name=form.cleaned_data.get("name"),
-                start=start,
-                end=end,
+                start=form.cleaned_data.get("start"),
+                end=form.cleaned_data.get("end"),
                 username=user,
                 type=form.cleaned_data.get("type"),
                 file=request.FILES.get("file"),
@@ -417,7 +439,9 @@ def tournament(request, tournament_id):
     tournament = None
     template = loader.get_template('tournament.html')
     tournament = Tournament.objects.get(id=tournament_id)
+
     manager = Manager.objects.get(tournament=tournament)
+
     teams = list()
     players = list()
     playersT = PlayerTournament.objects.filter(tournament_id=tournament, acceptedbymanager=True, acceptedbycoach=True)

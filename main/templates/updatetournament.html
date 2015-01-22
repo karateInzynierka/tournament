@@ -1,39 +1,39 @@
 {% extends "base.html" %}
 {% block title %} Karate {% endblock %}
 {% block header %} Edycja turnieju: {% endblock %}
-{% block content %}
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css"> 
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 
-<form method="post" action="">
-	{% csrf_token %}
-    <table class="table" style="width: 17%">
-        <tr>
-            <td><label>Nazwa: </label>
-            <td>{{ form.name }}</td>
-        </tr>
-        <tr>
-            <td><label>Data rozpoczęcia: </label>
-            <td>{{ form.start }}</td>
-        </tr>
-        <tr>
-            <td><label>Data zakończenia: </label>
-            <td>{{ form.end }}</td>
-        </tr>
-       <tr>
-            <td><input type="submit" class="btn btn-default btn-primary" value="Zatwierdź"></td>
-            <td><a href="javascript:history.back()" class="btn btn-default btn-primary">Anuluj</a></td>
-       </tr>
-    </table>
-</form>
+{% block content %}
+    <link href="{{ STATIC_URL }}bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+    {{ form.media }}
+
+    <form method="post" action="">
+        {% csrf_token %}
+        <table class="table" style="width: 17%">
+            <tr>
+                <td><label>Nazwa: </label>
+                <td>{{ form.name }}</td>
+            </tr>
+            <tr>
+                <td><label>Data rozpoczęcia: </label>
+                <td>{{ form.start }}</td>
+            </tr>
+            <tr>
+                <td><label>Data zakończenia: </label>
+                <td>{{ form.end }}</td>
+            </tr>
+            <tr>
+                <td><label>Informacje: </label>
+                <td>{{ form.description }}</td>
+            </tr>
+           <tr>
+                <td><input type="submit" class="btn btn-default btn-primary" value="Zatwierdź"></td>
+                <td><a href="javascript:history.back()" class="btn btn-default btn-primary">Anuluj</a></td>
+           </tr>
+        </table>
+    </form>
 {% endblock %}
+
 {% block additional_js %}
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
-<script>
-$(document).ready(function() {
-    $('.datepicker').datepicker();
-});
-</script>
+    <script src="{{ STATIC_URL }}bootstrap/js/bootstrap.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 {% endblock %}

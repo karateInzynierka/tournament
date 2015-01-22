@@ -9,18 +9,22 @@
         <tr>
             <td><label>Imię: </label>
             <td>{{ form.name }}</td>
+            <td>{{ form.name.errors }}</td>
         </tr>
         <tr>
             <td><label>Nazwisko: </label>
             <td>{{ form.surname }}</td>
+            <td>{{ form.surname.errors }}</td>
         </tr>
         <tr>
             <td><label>E-mail:</label>
-            <td><input type="email" name="email" id="email"></td>
+            <td>{{ form.email }}</td>
+            <td>{{ form.email.errors }}</td>
         </tr>
         <tr>
             <td><label>Hasło:</label>
-            <td><input type="password" name="password" id="password"></td>
+            <td><input id="id_password" name="password" type="password"></td>
+            <td>{{ form.password.errors }}</td>
         </tr>
         <tr>
             <td><input type="submit" class="btn btn-default btn-primary" value="Zatwierdź"></td>
